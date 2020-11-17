@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"time"
 )
 
 // **GoLang Creating Structs** //
@@ -128,7 +129,15 @@ func main() {
 	point := 7
 	inc(&point) // Using "&" points to the specific memory address the variable is stored
 	fmt.Println(point)
+	fmt.Println("------------")
 
+	// **GoLang Concurrency** //
+	fmt.Println("** Concurrency Example **")
+	c := make(chan string)
+	go count("sheep", c)
+
+	msg := <-c
+	fmt.Println(msg)
 }
 
 // **GoLang Initializing New Functions //
@@ -138,7 +147,7 @@ func add(x int, y int) int { // func -> name of function -> (arguments) -> retur
 
 func sqrt(x float64) (float64, error) {
 	if x < 0 {
-		return 0, errors.New("Undefined for negative numbers")
+		return 0, errors.New("Undefined for nega tive numbers")
 	}
 
 	return math.Sqrt(x), nil
@@ -147,4 +156,13 @@ func sqrt(x float64) (float64, error) {
 // **GoLang Pointer Functions** //
 func inc(x *int) {
 	*x++
+}
+
+// **GoLang Concurrency Funtions** //
+func count(thing string, c chan string) {
+	for i := 1; i <= 5; i++ {
+		c <- thing
+		time.Sleep(time.Millisecond * 500)
+	}
+
 }
